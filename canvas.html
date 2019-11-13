@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+<script>
+
+	
+// creating variables
+	var jscanvas = document.getElementById("myCanvas");
+	var ctx = jscanvas.getContext("2d")
+	var color_id = document.getElementById("picker").value;
+	var pencolor = "pink";
+	var penwrite = true
+
+// sizing the canvas as per the instruction
+
+	document.querySelector("#myCanvas").height = window.innerHeight * 0.8;
+	document.querySelector("#myCanvas").width = window.innerWidth * 0.8;
+
+
+// Instruction to start drawing in canvas when penwriite is "true". 
+   // source ref- https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
+   // used function(e)- where e is the short var reference for event object which will be passed to event handlers.
+      // source ref- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events
+
+	myCanvas.addEventListener(
+		'mousemove', function(e){
+			console.log(e);
+			if (penwrite == true){
+				ctx.beginPath();
+				draw(e.offsetX, e.offsetY)
+				function draw(x, y){
+					ctx.arc(x, y, 10, 0, 2 * Math.PI)
+					ctx.fillStyle = pencolor
+					ctx.fill();
+				}
+			}
+
+			if (penwrite == false){
+				console.log("stop")
+			}
+		})
+
+	// Instruction to change color by calling id "picker".
+	    // source ref- https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event
+
+		picker.addEventListener(
+			"change", function(){
+				color_id = this.value;
+				console.log(this);
+				pencolor = color_id;
+			}
+	)
+
+	// Instruction to change colors by different keys.
+	    // key code source ref- http://gcctech.org/csc/javascript/javascript_keycodes.htm
+		// code ref - https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+		
+
+	
+		window.addEventListener('keydown', function(e){
+				
+					if (e.keyCode == 66){
+						pencolor = "blue";
+						console.log(pencolor);
+					}
+					if (e.keyCode == 82) {
+						pencolor = "red";
+						console.log(pencolor);
+
+					}
+
+					if (e.keyCode == 71){
+						pencolor = "green";
+						console.log(pencolor);
+					}
+
+
+					if (e.keyCode == 89){
+						pencolor = "yellow";
+						console.log(pencolor);
+					}
+
+// // Instruction to change events by different keys.
+	    // key code source ref- http://gcctech.org/csc/javascript/javascript_keycodes.htm
+
+					if (e.keyCode == 32){
+						ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+					}
+					if (e.keyCode == 38){
+						penwrite = false;
+					}
+					if (e.keyCode == 40){
+						penwrite = true;
+					}
+			}
+		)
+</script>
+</body>
+</html>
